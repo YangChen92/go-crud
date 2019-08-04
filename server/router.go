@@ -1,8 +1,8 @@
 package server
 
 import (
-	"go-crud/api"
-	"go-crud/middleware"
+	"giligili/api"
+	"giligili/middleware"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -20,6 +20,7 @@ func NewRouter() *gin.Engine {
 	// 路由
 	v1 := r.Group("/api/v1")
 	{
+		v1.POST("videos",api.CreateVideo)
 		v1.POST("ping", api.Ping)
 
 		// 用户登录
