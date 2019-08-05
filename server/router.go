@@ -20,7 +20,7 @@ func NewRouter() *gin.Engine {
 	// 路由
 	v1 := r.Group("/api/v1")
 	{
-		v1.POST("videos",api.CreateVideo)
+		
 		v1.POST("ping", api.Ping)
 
 		// 用户登录
@@ -30,12 +30,16 @@ func NewRouter() *gin.Engine {
 		v1.POST("user/login", api.UserLogin)
 
 		// 需要登录保护的
-		v1.Use(middleware.AuthRequired())
+		authod := r.Group("/")
+		authod.Use(middleware.AuthRequired())
 		{
 			// User Routing
-			v1.GET("user/me", api.UserMe)
-			v1.DELETE("user/logout", api.UserLogout)
+			authod.GET("user/me", api.UserMe)
+			authod.DELETE("user/logout", api.UserLogout)
 		}
+
+
+		v1.POST("videos",api.CreateVideo)
 	}
 	return r
 }
